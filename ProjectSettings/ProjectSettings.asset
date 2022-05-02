@@ -752,6 +752,7 @@ PlayerSettings:
   webGLThreadsSupport: 0
   webGLDecompressionFallback: 0
   scriptingDefineSymbols:
+    Standalone: STARTER_ASSETS_PACKAGES_CHECKED
     iPhone: UNITY_XR_ARKIT_LOADER_ENABLED;STARTER_ASSETS_PACKAGES_CHECKED
   additionalCompilerArguments: {}
   platformArchitecture:

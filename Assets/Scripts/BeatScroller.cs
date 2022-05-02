@@ -27,7 +27,7 @@ public class BeatScroller : MonoBehaviour
     {
         // if (!hasStarted) return;
         if (!beatScroller.activeInHierarchy) return;
-        beatScroller.transform.position -= new Vector3(0f, _beatPerSecond * Time.deltaTime * 360, 0f);
+        beatScroller.transform.position -= new Vector3(0f, _beatPerSecond * Time.deltaTime * 720, 0f);
         
     }
 

@@ -16,18 +16,24 @@ using UnityEngine.XR.ARSubsystems;
 [RequireComponent(typeof(ARRaycastManager))]
 public class PlaceOnPlane : MonoBehaviour
 {
+    [FormerlySerializedAs("mPlacedPrefab")]
     [FormerlySerializedAs("m_PlacedPrefab")]
     [SerializeField]
     [Tooltip("Instantiates this prefab on a plane at the touch location.")]
     
     // PlacedPrefab: 放置的3D模型
-    public GameObject mPlacedPrefab;
+    public GameObject[] PlacedPrefabList;
+
+    public int prefabIndex;
+    private GameObject mPlacedPrefab;
         
     // visualObject: AR引导光标
     [SerializeField]
     public GameObject visualObject;
 
     public TextMeshProUGUI textText;
+
+    public StartSceneManager startSceneManager;
     
 
     static List<ARRaycastHit> Hits = new();
@@ -54,6 +60,8 @@ public class PlaceOnPlane : MonoBehaviour
 
     void Awake()
     {
+        prefabIndex = GlobalController.instance.selectedModelIndex;
+        mPlacedPrefab = PlacedPrefabList[prefabIndex];
         raycastManager = GetComponent<ARRaycastManager>();
 
         textText.text = "Please place the model on a plane.";
@@ -88,7 +96,7 @@ public class PlaceOnPlane : MonoBehaviour
             var hitPose = Hits[0].pose;
             SpawnedObject = Instantiate(mPlacedPrefab, hitPose.position, hitPose.rotation);
             isPrefabAlreadyPlaced = true;
-            textText.text = "Model successfully placed! Now enjoy your game.";
+            textText.text = "The " + prefabIndex + "th model successfully placed! Now enjoy your game.";
             _placementUpdate.Invoke();
         }
 

@@ -12,12 +12,12 @@ public class EffectObjectController : MonoBehaviour
     void Start()
     {
         // GameObject.Instantiate(effectObject);
-        Instantiate(effectObject, transform.position, effectObject.transform.rotation);
+        // Instantiate(effectObject, transform.position, effectObject.transform.rotation);
     }
 
     // Update is called once per frame
     void Update()
     {
-        Destroy(gameObject, lifetime);
+        // Destroy(gameObject, lifetime);
     }
 }

@@ -31,10 +31,7 @@ public class PauseMenuController : MonoBehaviour
 
     public void BackToStartMenuHandler()
     {
-        // SceneManager.LoadScene("StartScene");
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex - 1);
-        // SceneManager.UnloadSceneAsync(SceneManager.GetActiveScene().buildIndex);
-        // SceneManager.
     }
 
     private void ResumeGame()

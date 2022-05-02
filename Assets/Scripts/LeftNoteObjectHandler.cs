@@ -11,6 +11,7 @@ public class LeftNoteObjectHandler : MonoBehaviour
     public bool canBePressed;
     [FormerlySerializedAs("button")] public Button leftButton;
     public GameObject hitEffect, goodEffect, perfectEffect, missEffect;
+    public GameObject parentNode;
 
     // Start is called before the first frame update
     void Start()
@@ -44,15 +45,15 @@ public class LeftNoteObjectHandler : MonoBehaviour
         {
             case <= 5:
                 GameManager.GameManagerInstance.PerfectHit();
-                Instantiate(perfectEffect, transform.position, perfectEffect.transform.rotation);
+                Instantiate(perfectEffect, transform.position, perfectEffect.transform.rotation, parentNode.transform);
                 break;
             case > 5 and <= 40:
                 GameManager.GameManagerInstance.GoodHit();
-                Instantiate(goodEffect, transform.position, goodEffect.transform.rotation);
+                Instantiate(goodEffect, transform.position, goodEffect.transform.rotation, parentNode.transform);
                 break;
             default:
                 GameManager.GameManagerInstance.NormalHit();
-                Instantiate(hitEffect, transform.position, hitEffect.transform.rotation);
+                Instantiate(hitEffect, transform.position, hitEffect.transform.rotation, parentNode.transform);
                 break;
         }
     }
@@ -71,6 +72,6 @@ public class LeftNoteObjectHandler : MonoBehaviour
         if (!other.CompareTag("Activator") || !gameObject.activeSelf) return;
         canBePressed = false;
         GameManager.GameManagerInstance.NoteMissed();
-        Instantiate(missEffect, transform.position, missEffect.transform.rotation);
+        Instantiate(missEffect, transform.position, missEffect.transform.rotation, parentNode.transform);
     }
 }

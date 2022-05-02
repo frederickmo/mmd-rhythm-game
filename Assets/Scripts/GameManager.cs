@@ -5,13 +5,21 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.Serialization;
+using UnityEngine.SceneManagement;
 using Random = UnityEngine.Random;
 
 
 public class GameManager : MonoBehaviour
 {
+    
+    private static bool _isGamePaused;
 
-    public AudioSource bgm;
+    public GameObject pauseMenuUI;
+
+    // public AudioSource bgm;
+    public AudioSource[] bgmList;
+    private AudioSource _bgm;
+    public int selectedBgmIndex;
 
     public bool startBgm;
 
@@ -55,6 +63,10 @@ public class GameManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        selectedBgmIndex = GlobalController.instance.selectedMusicIndex;
+        _bgm = bgmList[selectedBgmIndex];
+        
+        _isGamePaused = false;
         GameManagerInstance = this;
         scoreText.text = "0";
         multiText.text = "×1";
@@ -110,7 +122,7 @@ public class GameManager : MonoBehaviour
         startBgm = true;
         beatScroller.hasStarted = true;
         // beatScroller.
-        bgm.Play();
+        _bgm.Play();
     }
 
     private void NoteHit()
@@ -232,4 +244,39 @@ public class GameManager : MonoBehaviour
         // }
         
     }
+    
+    
+    public void PauseButtonHandler()
+    {
+        if (_isGamePaused)
+        {
+            ResumeGame();
+        }
+        else
+        {
+            PauseGame();
+        }
+    }
+
+    public void BackToStartMenuHandler()
+    {
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex - 1);
+    }
+
+    private void ResumeGame()
+    {
+        pauseMenuUI.SetActive(false);
+        Time.timeScale = 1f;
+        _bgm.UnPause();
+        _isGamePaused = false;
+    }
+
+    private void PauseGame()
+    {
+        pauseMenuUI.SetActive(true);
+        Time.timeScale = 0f;
+        _bgm.Pause();
+        _isGamePaused = true;
+    }
+
 }
