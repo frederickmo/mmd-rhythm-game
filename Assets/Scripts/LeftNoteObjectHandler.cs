@@ -10,7 +10,7 @@ public class LeftNoteObjectHandler : MonoBehaviour
     // private bool onTouchThisButton;
     public bool canBePressed;
     [FormerlySerializedAs("button")] public Button leftButton;
-    public GameObject hitEffect, goodEffect, perfectEffect, missEffect;
+    public GameObject hitEffect, goodEffect, perfectEffect;
     public GameObject parentNode;
 
     // Start is called before the first frame update
@@ -44,15 +44,15 @@ public class LeftNoteObjectHandler : MonoBehaviour
         switch (distance)
         {
             case <= 5:
-                GameManager.GameManagerInstance.PerfectHit();
+                GameManager.gameManagerInstance.PerfectHit();
                 Instantiate(perfectEffect, transform.position, perfectEffect.transform.rotation, parentNode.transform);
                 break;
             case > 5 and <= 40:
-                GameManager.GameManagerInstance.GoodHit();
+                GameManager.gameManagerInstance.GoodHit();
                 Instantiate(goodEffect, transform.position, goodEffect.transform.rotation, parentNode.transform);
                 break;
             default:
-                GameManager.GameManagerInstance.NormalHit();
+                GameManager.gameManagerInstance.NormalHit();
                 Instantiate(hitEffect, transform.position, hitEffect.transform.rotation, parentNode.transform);
                 break;
         }
@@ -71,7 +71,7 @@ public class LeftNoteObjectHandler : MonoBehaviour
         // 音符在离开按钮瞬间且处于激活状态（表明之前已与按钮发生碰撞）若为被点击则记为missed
         if (!other.CompareTag("Activator") || !gameObject.activeSelf) return;
         canBePressed = false;
-        GameManager.GameManagerInstance.NoteMissed();
-        Instantiate(missEffect, transform.position, missEffect.transform.rotation, parentNode.transform);
+        GameManager.gameManagerInstance.NoteMissed();
+        // Instantiate(missEffect, transform.position, missEffect.transform.rotation, parentNode.transform);
     }
 }

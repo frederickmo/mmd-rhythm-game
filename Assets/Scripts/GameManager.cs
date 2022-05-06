@@ -9,6 +9,7 @@ using UnityEngine.SceneManagement;
 using Random = UnityEngine.Random;
 
 
+
 public class GameManager : MonoBehaviour
 {
     
@@ -18,6 +19,7 @@ public class GameManager : MonoBehaviour
 
     // public AudioSource bgm;
     public AudioSource[] bgmList;
+    public int[] bpmOfBgmList;
     private AudioSource _bgm;
     public int selectedBgmIndex;
 
@@ -25,7 +27,7 @@ public class GameManager : MonoBehaviour
 
     public BeatScroller beatScroller;
 
-    public static GameManager GameManagerInstance;
+    public static GameManager gameManagerInstance;
 
     public int currentScore;
     
@@ -58,8 +60,9 @@ public class GameManager : MonoBehaviour
     private bool _fixSpawnedObject;
 
     public TextMeshProUGUI trialText;
-
-
+    
+    private int[] _animationBpm = { 96, 106, 114, 108, 109, 114, 116, 114, 102 };
+    
     // Start is called before the first frame update
     void Start()
     {
@@ -67,7 +70,7 @@ public class GameManager : MonoBehaviour
         _bgm = bgmList[selectedBgmIndex];
         
         _isGamePaused = false;
-        GameManagerInstance = this;
+        gameManagerInstance = this;
         scoreText.text = "0";
         multiText.text = "×1";
         currentMultiplier = 1;
@@ -149,7 +152,7 @@ public class GameManager : MonoBehaviour
             trialText.text = "Miku is ready.";
         }
         
-        if (consecutiveHitCount < 20)
+        if (consecutiveHitCount < 64)
             consecutiveHitCount++;
         else
         {
@@ -161,6 +164,7 @@ public class GameManager : MonoBehaviour
             if (_fixSpawnedObject)
             {
                 _animator.SetInteger(State, curAnimationState);
+                _animator.speed = (bpmOfBgmList[selectedBgmIndex] * 1f) / (_animationBpm[selectedBgmIndex] * 1f);
                 // trialText.text = "Animation changed. curState is " + curAnimationState + ".";
                 trialText.text = "Nice Hit!";
             }

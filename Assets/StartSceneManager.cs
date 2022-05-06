@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using TMPro;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.Serialization;
@@ -75,6 +76,11 @@ public class StartSceneManager : MonoBehaviour
 
     public AudioSource[] musicList;
 
+    public AudioSource[] gameHallBgmList;
+    public Slider volumeSlider;
+    public Toggle gameHallBgmToggle;
+    private AudioSource _gameHallBgm;
+
     private bool _isAnyMusicPlaying;
 
     private int _currentPlayingIndex;
@@ -92,6 +98,12 @@ public class StartSceneManager : MonoBehaviour
         _musicTitleList.Add("ヴァンパイア");
         _musicTitleList.Add("千本桜");
 
+        var random = new System.Random();
+        var randIndex = random.Next(0, gameHallBgmList.Length);
+        _gameHallBgm = gameHallBgmList[randIndex];
+        _gameHallBgm.Play();
+
+        volumeSlider.value = 0.5f;
     }
 
     // Update is called once per frame
@@ -268,14 +280,22 @@ public class StartSceneManager : MonoBehaviour
         MuteAllAudio();
         if (!_isAnyMusicPlaying)
         {
+            _gameHallBgm.Pause();
             musicList[index].Play();
             _currentPlayingIndex = index;
         }
         else if (!_currentPlayingIndex.Equals(index))
         {
+            if (_gameHallBgm.isPlaying)
+                _gameHallBgm.Pause();
             musicList[index].Play();
             _currentPlayingIndex = index;
             return;
+        }
+        else
+        {
+            if (!_gameHallBgm.isPlaying && gameHallBgmToggle.isOn)
+                _gameHallBgm.UnPause();
         }
         _isAnyMusicPlaying = !_isAnyMusicPlaying;
     }
@@ -288,12 +308,37 @@ public class StartSceneManager : MonoBehaviour
         selectedMusicCover.GetComponent<Image>().sprite = musicAlbumCoverList[index];
         selectedMusicTitle.text = _musicTitleList[index];
         ExitButtonAnimation();
+        if (!_gameHallBgm.isPlaying)
+            _gameHallBgm.Play();
     }
-
-
+    
     private void MuteAllAudio()
     {
         foreach (var audioSource in musicList)
             audioSource.Stop();
+    }
+
+    /**
+     * 选项页面滑动条的方法
+     */
+    public void VolumeSlider(float volume)
+    {
+        _gameHallBgm.volume = volumeSlider.value;
+        foreach (var music in musicList)
+        {
+            music.volume = volumeSlider.value;
+        }
+    }
+
+    public void MuteOrActivateGameHallBgm()
+    {
+        if (!gameHallBgmToggle.isOn)
+        {
+            _gameHallBgm.Pause();
+        }
+        else
+        {
+            _gameHallBgm.Play();
+        }
     }
 }

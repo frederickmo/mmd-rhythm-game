@@ -9,7 +9,7 @@ public class TransitionBetweenScenesController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        
+        animator.SetTrigger("OnCircleWipeOut");
     }
 
     // Update is called once per frame

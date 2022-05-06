@@ -12,7 +12,6 @@ GameObject:
   - component: {fileID: 3789738908896498726}
   - component: {fileID: 3789738908896498728}
   - component: {fileID: 3789738908896498731}
-  - component: {fileID: 3789738908896498733}
   - component: {fileID: 3789738908896498730}
   - component: {fileID: 2995687299970918828}
   m_Layer: 5
@@ -132,28 +131,6 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
---- !u!114 &3789738908896498733
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3789738908896498724}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 93326875e73bf44b793b7bbc0c546872, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  canBePressed: 0
-  button: {fileID: 0}
-  hitEffect: {fileID: 242018968838600719, guid: 3697843a466154bb7b9cd00b3c32ac31,
-    type: 3}
-  goodEffect: {fileID: 7384973889802920199, guid: 7450dba7c25aa44f88ecca78f973f1f0,
-    type: 3}
-  perfectEffect: {fileID: 4119301738345467685, guid: 262d86b8703f14e8f805131788861c21,
-    type: 3}
-  missEffect: {fileID: 4922702907344043258, guid: 3576c9b1a59c64dbe9ac325cee6518ad,
-    type: 3}
 --- !u!58 &3789738908896498730
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -184,11 +161,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   canBePressed: 0
   rightButton: {fileID: 0}
-  hitEffect: {fileID: 242018968838600719, guid: 3697843a466154bb7b9cd00b3c32ac31,
+  hitEffect: {fileID: 5468180342844840368, guid: ee9dc29d200be474baa8ccb0ec26e63b,
     type: 3}
-  goodEffect: {fileID: 7384973889802920199, guid: 7450dba7c25aa44f88ecca78f973f1f0,
+  goodEffect: {fileID: 10903236530263804, guid: df653eb6759d74e26858a155bc8fad67,
     type: 3}
-  perfectEffect: {fileID: 4119301738345467685, guid: 262d86b8703f14e8f805131788861c21,
-    type: 3}
-  missEffect: {fileID: 4922702907344043258, guid: 3576c9b1a59c64dbe9ac325cee6518ad,
+  perfectEffect: {fileID: 6449789718617977998, guid: e00714089d6fa45a2a16415683b009e1,
     type: 3}

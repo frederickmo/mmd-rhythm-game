@@ -41,15 +41,15 @@ public class NoteObjectHandler : MonoBehaviour
         switch (distance)
         {
             case <= 5:
-                GameManager.GameManagerInstance.PerfectHit();
+                GameManager.gameManagerInstance.PerfectHit();
                 Instantiate(perfectEffect, transform.position, perfectEffect.transform.rotation);
                 break;
             case > 5 and <= 40:
-                GameManager.GameManagerInstance.GoodHit();
+                GameManager.gameManagerInstance.GoodHit();
                 Instantiate(goodEffect, transform.position, goodEffect.transform.rotation);
                 break;
             default:
-                GameManager.GameManagerInstance.NormalHit();
+                GameManager.gameManagerInstance.NormalHit();
                 Instantiate(hitEffect, transform.position, hitEffect.transform.rotation);
                 break;
         }
@@ -68,7 +68,7 @@ public class NoteObjectHandler : MonoBehaviour
         // 音符在离开按钮瞬间且处于激活状态（表明之前已与按钮发生碰撞）若为被点击则记为missed
         if (!other.CompareTag("Activator") || !gameObject.activeSelf) return;
         canBePressed = false;
-        GameManager.GameManagerInstance.NoteMissed();
+        GameManager.gameManagerInstance.NoteMissed();
         Instantiate(missEffect, transform.position, missEffect.transform.rotation);
     }
 }
