@@ -1,3 +1,4 @@
+using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
@@ -44,6 +45,10 @@ public class PlaceOnPlane : MonoBehaviour
 
     [FormerlySerializedAs("_isPrefabAlreadyPlaced")] public bool isPrefabAlreadyPlaced;
 
+    public GameObject placeModelGuideText;
+    public Animator placeModelGuideTextAnimator;
+    public GameObject startGameGuideText;
+
     /// <summary>
     /// The prefab to instantiate on touch.
     /// </summary>
@@ -56,7 +61,9 @@ public class PlaceOnPlane : MonoBehaviour
     /// <summary>
     /// The object instantiated as a result of a successful raycast intersection with a plane.
     /// </summary>
-    public GameObject SpawnedObject { get; private set; }
+    ///
+    /// TODO: 这里暂时取消了spawnedObject的set的private设置方法，为了测试能够改变ar模型
+    public GameObject SpawnedObject { get; set; }
 
     void Awake()
     {
@@ -94,10 +101,13 @@ public class PlaceOnPlane : MonoBehaviour
         {
             raycastManager.Raycast(touchPosition, Hits, TrackableType.PlaneWithinPolygon);
             var hitPose = Hits[0].pose;
+            GlobalController.instance.hitPose = hitPose;
             SpawnedObject = Instantiate(mPlacedPrefab, hitPose.position, hitPose.rotation);
             isPrefabAlreadyPlaced = true;
             textText.text = "The " + prefabIndex + "th model successfully placed! Now enjoy your game.";
             _placementUpdate.Invoke();
+
+            StartCoroutine(ChangeText());
         }
 
         // if (raycastManager.Raycast(touchPosition, Hits, TrackableType.PlaneWithinPolygon))
@@ -125,5 +135,15 @@ public class PlaceOnPlane : MonoBehaviour
     void DisableVisual()
     {
         visualObject.SetActive(false);
+    }
+
+    private IEnumerator ChangeText()
+    {
+        placeModelGuideTextAnimator.SetTrigger("OnDisable");
+        yield return new WaitForSeconds(0.2f);
+        startGameGuideText.SetActive(true);
+        yield return new WaitForSeconds(0.2f);
+        placeModelGuideText.SetActive(false);
+
     }
 }

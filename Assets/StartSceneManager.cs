@@ -175,6 +175,8 @@ public class StartSceneManager : MonoBehaviour
     IEnumerator OnEnterGameSceneAnimation()
     {
         loadGameSceneAnimator.SetTrigger("OnCircleWipeIn");
+        // yield return new WaitForSeconds(.2f);
+        // ResetAllAnimationsBeforeEnterGameScene();
         yield return new WaitForSeconds(0.4f);
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
         // loadGameSceneAnimator.SetTrigger("OnCircleWipeOut");
@@ -182,10 +184,15 @@ public class StartSceneManager : MonoBehaviour
 
     IEnumerator OnClickStartTransition()
     {
+        Debug.Log("mainMenuAnimator的动画运行之前");
         mainMenuAnimator.SetTrigger(OnClickStart);
+        Debug.Log("mainMenuAnimator的动画已运行");
         yield return new WaitForSeconds(0.4f);
+        Debug.Log("wait for 0.4秒已运行");
         selectMainBoxAnimator.SetTrigger(OnChooseGridShow);
+        Debug.Log("selectBox的动画已运行");
         exitButtonAnimator.SetTrigger(OnExitButtonWipeDown);
+        Debug.Log("exitButton的动画已运行");
     }
 
     IEnumerator OnClickExitButtonAnimation()
@@ -193,6 +200,14 @@ public class StartSceneManager : MonoBehaviour
         selectMainBoxAnimator.SetTrigger(OnChooseGridWipeBack);
         exitButtonAnimator.SetTrigger(OnExitButtonWipeUp);
         yield return new WaitForSeconds(0.4f);
+        mainMenuAnimator.SetTrigger(OnMainMenuWipeBack);
+    }
+    
+    // TODO: 从初始界面到游戏界面再回到初试界面会卡住，不知道是不是菜单动画没有原路返回的原因；这里试试在载入场景前原路返回
+    public void ResetAllAnimationsBeforeEnterGameScene()
+    {
+        selectMainBoxAnimator.SetTrigger(OnChooseGridWipeBack);
+        exitButtonAnimator.SetTrigger(OnExitButtonWipeUp);
         mainMenuAnimator.SetTrigger(OnMainMenuWipeBack);
     }
 

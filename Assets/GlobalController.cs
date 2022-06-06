@@ -12,6 +12,8 @@ public class GlobalController : MonoBehaviour
     public int selectedModelIndex;
 
     public int selectedMusicIndex;
+
+    public Pose hitPose;
     
     // Start is called before the first frame update
     void Awake()
